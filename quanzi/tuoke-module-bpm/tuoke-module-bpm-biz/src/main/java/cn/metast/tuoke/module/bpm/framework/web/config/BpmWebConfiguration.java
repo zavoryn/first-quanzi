@@ -1,0 +1,38 @@
+package cn.metast.tuoke.module.bpm.framework.web.config;
+
+import cn.metast.tuoke.framework.common.enums.WebFilterOrderEnum;
+import cn.metast.tuoke.framework.swagger.config.TuokeSwaggerAutoConfiguration;
+import cn.metast.tuoke.module.bpm.framework.web.core.FlowableWebFilter;
+import org.springdoc.core.models.GroupedOpenApi;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * bpm 模块的 web 组件的 Configuration
+ *
+ * @author metast.cn
+ */
+@Configuration(proxyBeanMethods = false)
+public class BpmWebConfiguration {
+
+    /**
+     * bpm 模块的 API 分组
+     */
+    @Bean
+    public GroupedOpenApi bpmGroupedOpenApi() {
+        return TuokeSwaggerAutoConfiguration.buildGroupedOpenApi("bpm");
+    }
+
+    /**
+     * 配置 Flowable Web 过滤器
+     */
+    @Bean
+    public FilterRegistrationBean<FlowableWebFilter> flowableWebFilter() {
+        FilterRegistrationBean<FlowableWebFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new FlowableWebFilter());
+        registrationBean.setOrder(WebFilterOrderEnum.FLOWABLE_FILTER);
+        return registrationBean;
+    }
+
+}
