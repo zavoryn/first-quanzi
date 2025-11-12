@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.metast.tuoke.module.community.dal.mysql.cmComment.CmCommentMapper">
+
+    <!--
+        一般情况下，尽可能使用 Mapper 进行 CRUD 增删改查即可。
+        无法满足的场景，例如说多表关联查询，才使用 XML 编写 SQL。
+        代码生成器暂时只生成 Mapper XML 文件本身，更多推荐 MybatisX 快速开发插件来生成查询。
+        文档可见：https://www.metast.cn/MyBatis/x-plugins/
+     -->
+    <resultMap type="cn.metast.tuoke.module.community.dal.dataobject.cmComment.CmCommentDO" id="CmCommentResult">
+        <result property="id"    column="id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="type"    column="type"    />
+        <result property="userId"    column="user_id"    />
+        <result property="toUserId"    column="to_user_id"    />
+        <result property="postId"    column="post_id"    />
+        <result property="content"    column="content"    />
+        <result property="likeCount"    column="like_count"    />
+        <result property="status"    column="status"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updater"    column="updater"    />
+        <result property="updateTime"    column="update_time"    />
+
+        <result property="topicName"    column="topic_name"    />
+    </resultMap>
+    <sql id="cmCommentVo">
+       select t1.id,t1.parent_id,t1.type,t1.user_id,t1.to_user_id,t1.post_id,t1.content,t1.like_count,t1.status,t1.creator,t1.create_time,t1.updater,t1.update_time,
+       t3.topic_name
+        from cm_comment t1 left join cm_post t2 on t1.post_id = t2.id left join cm_topic t3 on t2.topic_id = t3.id
+    </sql>
+    <select id="getCmCommentPageNew" parameterType="cn.metast.tuoke.module.community.controller.admin.cmComment.vo.CmCommentPageReqVO" resultMap="CmCommentResult">
+        <include refid="cmCommentVo"/>
+        <where>
+            <if test="reqvo.postId != null  and reqvo.postId != ''"> and t1.post_id = #{reqvo.postId}</if>
+            <if test="reqvo.parentId != null  and reqvo.parentId != ''"> and t1.parent_id = #{reqvo.parentId}</if>
+            <if test="reqvo.toUserId != null  and reqvo.toUserId != ''"> and t1.to_user_id = #{reqvo.toUserId}</if>
+            <if test="reqvo.userId != null  and reqvo.userId != ''"> and t1.user_id = #{reqvo.userId}</if>
+            <if test="reqvo.status != null  and reqvo.status != ''"> and t1.status = #{reqvo.status}</if>
+            <if test="reqvo.topicId != null  and reqvo.topicId != ''"> and t3.id = #{reqvo.topicId}</if>
+            <if test="reqvo.type != null">
+                <if test="reqvo.type==0">
+                    and t1.status = '1' and t1.deleted = 0
+                </if>
+                <if test="reqvo.type==1">
+                    and t1.`id` NOT IN (SELECT `parent_id` FROM `cm_comment`WHERE `parent_id` != 0) and t1.deleted = 0 and t1.status = '0'
+                </if>
+                <if test="reqvo.type==2">
+                    and t1.`id` IN (SELECT `parent_id`FROM `cm_comment` WHERE `parent_id` != 0) and t1.deleted = 0 and t1.status = '0'
+                </if>
+                <if test="reqvo.type==3">
+                    and t1.deleted = 1
+                </if>
+            </if>
+            order by t1.create_time desc
+        </where>
+    </select>
+</mapper>
