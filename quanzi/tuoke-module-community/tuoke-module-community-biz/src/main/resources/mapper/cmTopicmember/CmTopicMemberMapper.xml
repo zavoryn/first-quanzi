@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.metast.tuoke.module.community.dal.mysql.cmTopicmember.CmTopicMemberMapper">
+
+    <!--
+        一般情况下，尽可能使用 Mapper 进行 CRUD 增删改查即可。
+        无法满足的场景，例如说多表关联查询，才使用 XML 编写 SQL。
+        代码生成器暂时只生成 Mapper XML 文件本身，更多推荐 MybatisX 快速开发插件来生成查询。
+        文档可见：https://www.metast.cn/MyBatis/x-plugins/
+     -->
+    <resultMap type="cn.metast.tuoke.module.community.dal.dataobject.cmTopicmember.CmTopicMemberDO" id="CmTopicMemberResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="topicId"    column="topic_id"    />
+        <result property="role"    column="role"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="status"    column="status"    />
+        <result property="muteEndTime"    column="mute_end_time"    />
+        <result property="joinTime"    column="join_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="type"    column="type"    />
+        <result property="interNum"    column="inter_num"    />
+        <result property="blockRemark"    column="block_remark"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updater"    column="updater"    />
+        <result property="updateTime"    column="update_time"    />
+
+
+        <result property="nickname"    column="nickname"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="avatar"    column="avatar"    />
+    </resultMap>
+    <sql id="cmTopicMemberVo">
+        select t1.id,t1.user_id,t1.topic_id,t1.role,t1.order_num,t1.status, t1.mute_end_time, t1.join_time, t1.start_time, t1.end_time, t1.type, t1.inter_num,t1.block_remark,
+               t1.remark,t1.creator,t1.create_time,t1.updater,t1.update_time
+        from cm_topic_member t1 left join promotion_kefu_conversation t2 on (t1.user_id = t2.user_id or t1.user_id = t2.receiver_id)
+    </sql>
+
+    <select id="getCmTopicMemberConversationList" parameterType="cn.metast.tuoke.module.community.controller.admin.cmTopicmember.vo.CmTopicMemberPageReqVO" resultMap="CmTopicMemberResult">
+        <include refid="cmTopicMemberVo"/>
+        where t1.deleted=0
+            <if test="reqvo.topicId != null  and reqvo.topicId != ''"> and t1.topic_id = #{reqvo.topicId}</if>
+        order by t2.last_message_time DESC
+    </select>
+    <select id="selectMemberPage" resultType="cn.metast.tuoke.module.community.dal.dataobject.cmTopicmember.CmTopicMemberDO" resultMap="CmTopicMemberResult">
+        select t1.id,t1.user_id,t1.topic_id,t1.role,t1.order_num,t1.status, t1.mute_end_time, t1.join_time, t1.start_time, t1.end_time, t1.type, t1.inter_num,t1.block_remark,
+               t1.remark,t1.creator,t1.create_time,t1.updater,t1.update_time,t2.nickname,t2.mobile,t2.name,t2.avatar
+        from cm_topic_member t1 left join member_user t2 on t1.user_id = t2.id
+        where 1=1 and t1.role=0
+        <if test="reqvo.topicId != null  and reqvo.topicId != ''"> and t1.topic_id = #{reqvo.topicId}</if>
+        <if test="reqvo.userId != null  and reqvo.userId != ''"> and t1.user_id = #{reqvo.userId}</if>
+        <if test="reqvo.nickname != null  and reqvo.nickname != ''">
+          and (t2.nickname like concat('%', #{reqvo.nickname}, '%') or t2.mobile like concat('%', #{reqvo.nickname}, '%')
+               or t2.id like concat('%', #{reqvo.nickname}, '%')  or t2.name like concat('%', #{reqvo.nickname}, '%')
+              )
+        </if>
+        <if test="reqvo.mobile != null  and reqvo.mobile != ''"> and t2.mobile like concat('%', #{reqvo.mobile}, '%')</if>
+        <if test="reqvo.beginTime != null  and reqvo.finishTime != null">
+            AND DATE(t1.start_time) BETWEEN #{reqvo.beginTime} AND #{reqvo.finishTime}
+        </if>
+        order by t1.start_time DESC
+    </select>
+
+    <select id="getCmTopicMemberOwnList" resultType="cn.metast.tuoke.module.community.dal.dataobject.cmTopicmember.CmTopicMemberDO" resultMap="CmTopicMemberResult">
+        select t1.id,t1.user_id,t1.topic_id,t1.role,t1.order_num,t1.status, t1.mute_end_time, t1.join_time, t1.start_time, t1.end_time, t1.type, t1.inter_num,t1.block_remark,
+        t1.remark,t1.creator,t1.create_time,t1.updater,t1.update_time,t2.nickname,t2.name,t2.mobile,t2.avatar
+        from cm_topic_member t1 left join member_user t2 on t1.user_id = t2.id
+        where 1=1
+        <if test="reqvo.topicId != null  and reqvo.topicId != ''"> and t1.topic_id = #{reqvo.topicId}</if>
+        <if test="reqvo.nickname != null  and reqvo.nickname != ''">
+            and (t2.nickname like concat('%', #{reqvo.nickname}, '%') or t2.mobile like concat('%', #{reqvo.nickname}, '%')
+            or t2.id like concat('%', #{reqvo.nickname}, '%')  or t2.name like concat('%', #{reqvo.nickname}, '%')
+            )
+        </if>
+        order by t1.start_time DESC
+    </select>
+
+    <select id="getIncomeDetailList" resultType="cn.metast.tuoke.module.community.dal.dataobject.cmTopicmember.CmTopicMemberDO" resultMap="CmTopicMemberResult">
+        select t1.id,t1.user_id,t1.topic_id,t1.role,t1.order_num,t1.status, t1.mute_end_time, t1.join_time, t1.start_time, t1.end_time, t1.type, t1.inter_num,t1.block_remark,
+        t1.remark,t1.creator,t1.create_time,t1.updater,t1.update_time,t2.nickname,t2.name,t2.mobile,t2.avatar
+        from cm_topic_member t1 left join member_user t2 on t1.user_id = t2.id
+        where t1.role=0
+        <if test="reqvo.topicId != null  and reqvo.topicId != ''"> and t1.topic_id = #{reqvo.topicId}</if>
+        <if test="reqvo.nickname != null  and reqvo.nickname != ''">
+            and (t2.nickname like concat('%', #{reqvo.nickname}, '%') or t2.mobile like concat('%', #{reqvo.nickname}, '%')
+            or t2.id like concat('%', #{reqvo.nickname}, '%')  or t2.name like concat('%', #{reqvo.nickname}, '%')
+            )
+        </if>
+        <if test="reqvo.beginTime != null  and reqvo.finishTime != null">
+            AND DATE(t1.start_time) BETWEEN #{reqvo.beginTime} AND #{reqvo.finishTime}
+        </if>
+        order by t1.start_time DESC
+    </select>
+</mapper>
