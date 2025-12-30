@@ -1,0 +1,26 @@
+package cn.metast.tuoke.module.kaifa.controller.admin.operatelog.vo;
+import cn.metast.tuoke.framework.common.pojo.PageParam;
+import cn.metast.tuoke.framework.common.validation.InEnum;
+import cn.metast.tuoke.module.kaifa.common.KaifaBizTypeEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@Schema(description = "管理后台 - CRM 操作日志 Request VO")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class KaifaOperateLogPageReqVO extends PageParam {
+
+    @Schema(description = "数据类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
+    @NotNull(message = "数据类型不能为空")
+    @InEnum(KaifaBizTypeEnum.class)
+    private Integer bizType;
+
+    @Schema(description = "数据编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
+    @NotNull(message = "数据编号不能为空")
+    private Long bizId;
+
+}
