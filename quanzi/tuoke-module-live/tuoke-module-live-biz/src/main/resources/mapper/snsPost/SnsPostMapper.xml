@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.metast.tuoke.module.live.dal.mysql.snsPost.SnsPostMapper">
+
+    <!--
+        一般情况下，尽可能使用 Mapper 进行 CRUD 增删改查即可。
+        无法满足的场景，例如说多表关联查询，才使用 XML 编写 SQL。
+        代码生成器暂时只生成 Mapper XML 文件本身，更多推荐 MybatisX 快速开发插件来生成查询。
+        文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
+     -->
+    <resultMap type="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostSaveReqVO" id="SnsPostResult">
+        <result property="postId"    column="post_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="postType"    column="post_type"    />
+        <result property="title"    column="title"    />
+        <result property="coverUrl"    column="cover_url"    />
+        <result property="tag"    column="tag"    />
+        <result property="contentType"    column="content_type"    />
+        <result property="content"    column="content"    />
+        <result property="linkUrl"    column="link_url"    />
+        <result property="shareUrl"    column="share_url"    />
+        <result property="mediaUrl"    column="media_url"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="picNum"    column="pic_num"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="shareNum"    column="share_num"    />
+        <result property="likeNum"    column="like_num"    />
+        <result property="commentNum"    column="comment_num"    />
+        <result property="visitNum"    column="visit_num"    />
+        <result property="privacy"    column="privacy"    />
+        <result property="soureFrom"    column="soure_from"    />
+        <result property="commentFlag"    column="comment_flag"    />
+        <result property="postMap"    column="post_map"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="addType"    column="add_type"    />
+        <result property="status"    column="status"    />
+        <result property="imUserId"    column="im_user_id"    />
+        <result property="dynaConfig"    column="dyna_config"    />
+        <result property="spelevel"    column="spelevel"    />
+        <result property="dslx"    column="dslx"    />
+
+        <result property="userName"    column="user_name"    />
+        <result property="boId"    column="bo_id"    />
+        <result property="industryId"    column="industry_id"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="subFlag"    column="sub_flag"    />
+        <result property="boType"    column="bo_type"/>
+
+
+        <result property="industryName"    column="industry_name"    />
+        <result property="areaName"    column="area_name"    />
+
+        <result property="reqType"    column="reqType"    />
+        <result property="industryIds"    column="industryIds"    />
+        <result property="areaIds"    column="areaIds"    />
+
+        <result property="spId"    column="sp_id"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="contactphone"    column="contactphone"    />
+        <result property="intro"    column="intro"    />
+        <result property="website"    column="website"    />
+
+        <result property="serviceId"    column="service_id"    />
+        <result property="typeSeting"    column="type_seting"    />
+        <result property="serviceConfig"    column="service_config"    />
+        <result property="bottomType"    column="bottom_type"/>
+
+
+        <result property="newsId"    column="news_id"    />
+        <result property="newsConfig"    column="news_config"    />
+
+        <result property="fileSize"    column="file_size"    />
+
+        <result property="sort"    column="sort"    />
+        <result property="position"    column="position"    />
+        <result property="label"    column="label"    />
+        <result property="address"    column="address"    />
+        <result property="coment"    column="coment"    />
+        <result property="accessCount"    column="access_count"    />
+        <result property="servicesId"    column="services_id"    />
+    </resultMap>
+    <update id="updateSnsPostPc" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostSaveReqVO">
+        update sns_post
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="postType != null and postType != ''">post_type = #{postType},</if>
+            title = #{title},
+            cover_url = #{coverUrl},
+            tag = #{tag},
+            content_type = #{contentType},
+            content = #{content},
+            link_url = #{linkUrl},
+            share_url = #{shareUrl},
+            media_url = #{mediaUrl},
+            file_url = #{fileUrl},
+            pic_num = #{picNum},
+            <if test="dynaConfig != null">dyna_config = #{dynaConfig},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="shareNum != null">share_num = #{shareNum},</if>
+            <if test="likeNum != null">like_num = #{likeNum},</if>
+            <if test="commentNum != null">comment_num = #{commentNum},</if>
+            <if test="visitNum != null">visit_num = #{visitNum},</if>
+            <if test="privacy != null">privacy = #{privacy},</if>
+            <if test="soureFrom != null">soure_from = #{soureFrom},</if>
+            comment_flag = #{commentFlag},
+            <if test="postMap != null">post_map = #{postMap},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="addType != null">add_type = #{addType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="spType != null">sp_type = #{spType},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="spelevel != null">spelevel = #{spelevel},</if>
+            <if test="dslx != null">dslx = #{dslx},</if>
+            <if test="coment != null">coment = #{coment},</if>
+            im_user_id = #{imUserId},
+        </trim>
+        where post_id = #{postId}
+    </update>
+
+    <delete id="deleteSnsPostById" parameterType="Long">
+        delete from sns_post where post_id = #{postId}
+    </delete>
+
+    <delete id="deleteSnsPostByIds" parameterType="String">
+        delete from sns_post where post_id in
+        <foreach item="postId" collection="array" open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </delete>
+
+    <select id="selectSnsNewsList" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostRespVO" resultMap="SnsPostResult">
+        select t1.news_id, t1.post_id,t1.type_seting,t1.news_config,t2.user_id, t2.post_type, t2.title, t2.cover_url, t2.tag, t2.content_type, t2.content, t2.link_url, t2.share_url, t2.media_url, t2.file_url, t2.pic_num,
+        t2.create_time, t2.share_num, t2.like_num, t2.comment_num, t2.visit_num, t2.privacy,
+        (SELECT file_size from qiwen_file t1 where t1.file_url=t2.cover_url ORDER BY file_id desc LIMIT 1) as file_size,
+        t2.soure_from, t2.comment_flag, t2.post_map, t2.longitude, t2.latitude ,t2.add_type,t2.status,t2.spelevel
+        from sns_news t1 left JOIN sns_post t2
+        on t1.post_id=t2.post_id
+        where status=0 and t2.post_type='news' and t1.is_flag=0
+        <if test="title!=null and title!=''">
+            and t2.title like concat('%', #{title}, '%')
+        </if>
+        <if test="newsId!=null and newsId!=''">
+            and t1.news_id=#{newsId}
+        </if>
+        <if test="spelevel!=null and spelevel!=''">
+            and t2.spelevel=#{spelevel}
+        </if>
+        <if test="newsConfig!=null and newsConfig!=''">
+            and t1.news_config=#{newsConfig}
+        </if>
+        <if test="spType != null and spType != ''">
+            and t2.sp_type = #{spType}
+        </if>
+        order by t2.sort DESC,t2.create_time desc
+        limit 5
+    </select>
+    <!--新闻列表更多-->
+    <select id="selectSnsNewsListApp" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostPageReqVO" resultMap="SnsPostResult">
+        select t1.news_id, t1.post_id,t1.type_seting,t1.news_config,t2.user_id, t2.post_type, t2.title, t2.cover_url, t2.tag, t2.content_type, t2.content, t2.link_url, t2.share_url, t2.media_url, t2.file_url, t2.pic_num,
+        t2.create_time, t2.share_num, t2.like_num, t2.comment_num, t2.visit_num, t2.privacy,
+        t2.soure_from, t2.comment_flag, t2.post_map, t2.longitude, t2.latitude ,t2.add_type,t2.status,t2.spelevel
+        from sns_news t1 left JOIN sns_post t2
+        on t1.post_id=t2.post_id
+        where t2.status=0 and t2.post_type='news' and t1.is_flag=0
+        <if test="reqVO.title!=null and reqVO.title!=''">
+            and t2.title like concat('%', #{reqVO.title}, '%')
+        </if>
+        <if test="reqVO.newsId!=null and reqVO.newsId!=''">
+            and t1.news_id=#{reqVO.newsId}
+        </if>
+        <if test="reqVO.newsConfig!=null and reqVO.newsConfig!=''">
+            and t1.news_config=#{reqVO.newsConfig}
+        </if>
+        <if test="reqVO.spelevel!=null and reqVO.spelevel!=''">
+            and t2.spelevel=#{reqVO.spelevel}
+        </if>
+        <!--创建和收藏的 -->
+        <if test="reqVO.postFlag!=null and reqVO.postFlag==1">
+            and t1.post_id in (select post_id from sns_post_favorite where user_id = #{reqVO.favUserId})
+        </if>
+        <if test="reqVO.postFlag!=null and reqVO.postFlag==2">
+            and t2.user_id = #{reqVO.favUserId}
+        </if>
+        <if test="reqVO.spType != null and reqVO.spType != ''">
+            and t2.sp_type = #{reqVO.spType}
+        </if>
+        order by t2.sort DESC,t2.create_time desc
+    </select>
+    <select id="selectSnsPostById" parameterType="Long" resultMap="SnsPostResult">
+        select post_id, user_id, sort,post_type,bottom_type, title, cover_url, tag, content_type, content, link_url, share_url, media_url, sns_post.file_url, pic_num,
+               create_time, share_num, like_num, comment_num, visit_num, privacy,spelevel,
+               soure_from, comment_flag, post_map, longitude, latitude,im_user_id,dyna_config,access_count from sns_post
+        where post_id = #{postId}
+    </select>
+
+
+    <select id="selectSnsPostList" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostPageReqVO" resultMap="SnsPostResult">
+        select post_id, user_id, post_type, t1.title, cover_url, tag, content_type, content, link_url, share_url, media_url, t1.file_url, pic_num,
+        create_time, share_num, like_num, comment_num, visit_num, privacy,spelevel,
+        (SELECT file_size from qiwen_file t2 where t2.file_url=t1.cover_url ORDER BY file_id desc LIMIT 1) as file_size,
+        soure_from, comment_flag, post_map, longitude, latitude,im_user_id,dyna_config from sns_post t1
+        <where>
+            <if test="postType != null  and postType != ''"> and t1.post_type = #{postType}</if>
+            <if test="title != null  and title != ''"> and t1.title like concat('%', #{title}, '%')</if>
+            <if test="coverUrl != null  and coverUrl != ''"> and t1.cover_url = #{coverUrl}</if>
+            <if test="tag != null  and tag != ''"> and t1.tag = #{tag}</if>
+            <if test="contentType != null  and contentType != ''"> and t1.content_type = #{contentType}</if>
+            <if test="content != null  and content != ''"> and t1.content like concat('%', #{content}, '%')</if>
+            <if test="linkUrl != null  and linkUrl != ''"> and t1.link_url = #{linkUrl}</if>
+            <if test="shareUrl != null  and shareUrl != ''"> and t1.share_url = #{shareUrl}</if>
+            <if test="mediaUrl != null  and mediaUrl != ''"> and t1.media_url = #{mediaUrl}</if>
+            <if test="fileUrl != null  and fileUrl != ''"> and t1.file_url = #{fileUrl}</if>
+            <if test="picNum != null "> and t1.pic_num = #{picNum}</if>
+
+            <if test="shareNum != null "> and t1.share_num = #{shareNum}</if>
+            <if test="likeNum != null "> and t1.like_num = #{likeNum}</if>
+            <if test="commentNum != null "> and t1.comment_num = #{commentNum}</if>
+            <if test="visitNum != null "> and t1.visit_num = #{visitNum}</if>
+            <if test="privacy != null "> and t1.privacy = #{privacy}</if>
+            <if test="spelevel != null "> and t1.spelevel = #{spelevel}</if>
+            <if test="soureFrom != null  and soureFrom != ''"> and t1.soure_from = #{soureFrom}</if>
+            <if test="commentFlag != null  and commentFlag != ''"> and t1.comment_flag = #{commentFlag}</if>
+            <if test="postMap != null  and postMap != ''"> and t1.post_map = #{postMap}</if>
+            <if test="longitude != null  and longitude != ''"> and t1.longitude = #{longitude}</if>
+            <if test="latitude != null  and latitude != ''"> and t1.latitude = #{latitude}</if>
+            <if test="addType != null  and addType != ''"> and t1.add_type = #{addType}</if>
+            <if test="status != null  and status != ''"> and t1.status = #{status}</if>
+            <if test="dynaConfig != null  and dynaConfig != ''"> and t1.dyna_config = #{dynaConfig}</if>
+            <if test="userId != null"> and t1.user_id = #{userId}</if>
+            <if test="postFlag!=null and postFlag==1">
+                and post_id in (select post_id from sns_post_favorite where user_id = #{favUserId})
+            </if>
+            <if test="postFlag!=null and postFlag==2">
+                and t1.user_id = #{favUserId}
+            </if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
+        order by t1.sort DESC,t1.create_time DESC
+    </select>
+
+    <insert id="insertSnsPost" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostRespVO" useGeneratedKeys="true" keyProperty="postId">
+        insert into sns_post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="postType != null and postType != ''">post_type,</if>
+            <if test="title != null">title,</if>
+            <if test="coverUrl != null">cover_url,</if>
+            <if test="tag != null">tag,</if>
+            <if test="contentType != null">content_type,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="linkUrl != null">link_url,</if>
+            <if test="shareUrl != null">share_url,</if>
+            <if test="mediaUrl != null">media_url,</if>
+            <if test="fileUrl != null">file_url,</if>
+            <if test="picNum != null">pic_num,</if>
+            <if test="spelevel != null">spelevel,</if>
+            <if test="dslx != null">dslx,</if>
+
+            <if test="createTime != null">create_time,</if>
+            <if test="shareNum != null">share_num,</if>
+            <if test="likeNum != null">like_num,</if>
+            <if test="commentNum != null">comment_num,</if>
+            <if test="visitNum != null">visit_num,</if>
+            <if test="privacy != null">privacy,</if>
+            <if test="soureFrom != null">soure_from,</if>
+            <if test="commentFlag != null">comment_flag,</if>
+            <if test="postMap != null">post_map,</if>
+            <if test="longitude != null">longitude,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="addType != null">add_type,</if>
+            <if test="status != null">status,</if>
+            <if test="imUserId != null and imUserId != ''">im_user_id,</if>
+            <if test="dynaConfig != null and dynaConfig != ''">dyna_config,</if>
+            <if test="spType != null">sp_type,</if>
+            <if test="sort != null">sort,</if>
+            <if test="coment != null">coment,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="postType != null and postType != ''">#{postType},</if>
+            <if test="title != null">#{title},</if>
+            <if test="coverUrl != null">#{coverUrl},</if>
+            <if test="tag != null">#{tag},</if>
+            <if test="contentType != null">#{contentType},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="linkUrl != null">#{linkUrl},</if>
+            <if test="shareUrl != null">#{shareUrl},</if>
+            <if test="mediaUrl != null">#{mediaUrl},</if>
+            <if test="fileUrl != null">#{fileUrl},</if>
+            <if test="picNum != null">#{picNum},</if>
+            <if test="spelevel != null">#{spelevel},</if>
+            <if test="dslx != null">#{dslx},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="shareNum != null">#{shareNum},</if>
+            <if test="likeNum != null">#{likeNum},</if>
+            <if test="commentNum != null">#{commentNum},</if>
+            <if test="visitNum != null">#{visitNum},</if>
+            <if test="privacy != null">#{privacy},</if>
+            <if test="soureFrom != null">#{soureFrom},</if>
+            <if test="commentFlag != null">#{commentFlag},</if>
+            <if test="postMap != null">#{postMap},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="addType != null">#{addType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="imUserId != null and imUserId != ''">#{imUserId},</if>
+
+            <if test="dynaConfig != null and dynaConfig != ''">#{dynaConfig},</if>
+            <if test="spType != null">#{spType},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="coment != null">#{coment},</if>
+        </trim>
+    </insert>
+
+    <select id="selectSnsPostListByType" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostRespVO" resultMap="SnsPostResult">
+        SELECT
+        post_id,
+        t1.user_id,
+        t1.title,
+        post_type,
+        cover_url,
+        tag,
+        content_type,
+        content,
+        link_url,
+        share_url,
+        media_url,
+        t1.file_url,
+        pic_num,
+        t1.create_time,
+        share_num,
+        like_num,
+        comment_num,
+        visit_num,
+        spelevel,
+        privacy,
+        t2.nickname nick_name,
+        t2.avatar,
+        t2.mobile as phonenumber,
+        longitude,
+        latitude,
+        soure_from,
+        comment_flag,
+        post_map,
+        longitude,
+        latitude,
+        im_user_id,
+        dyna_config
+        FROM
+        sns_post t1
+        LEFT JOIN system_users t2 ON t1.user_id = t2.id
+        <where>
+            <if test="postType != null  and postType != ''"> and t1.post_type = #{postType}</if>
+            <if test="title != null  and title != ''"> and t1.title like concat('%', #{title}, '%')</if>
+            <if test="coverUrl != null  and coverUrl != ''"> and t1.cover_url = #{coverUrl}</if>
+            <if test="tag != null  and tag != ''"> and t1.tag = #{tag}</if>
+            <if test="contentType != null  and contentType != ''"> and t1.content_type = #{contentType}</if>
+            <if test="content != null  and content != ''"> and t1.content like concat('%', #{content}, '%')</if>
+            <if test="linkUrl != null  and linkUrl != ''"> and t1.link_url = #{linkUrl}</if>
+            <if test="shareUrl != null  and shareUrl != ''"> and t1.share_url = #{shareUrl}</if>
+            <if test="mediaUrl != null  and mediaUrl != ''"> and t1.media_url = #{mediaUrl}</if>
+            <if test="fileUrl != null  and fileUrl != ''"> and t1.file_url = #{fileUrl}</if>
+            <if test="picNum != null "> and t1.pic_num = #{picNum}</if>
+
+            <if test="shareNum != null "> and t1.share_num = #{shareNum}</if>
+            <if test="likeNum != null "> and t1.like_num = #{likeNum}</if>
+            <if test="commentNum != null "> and t1.comment_num = #{commentNum}</if>
+            <if test="visitNum != null "> and t1.visit_num = #{visitNum}</if>
+            <if test="privacy != null "> and t1.privacy = #{privacy}</if>
+            <if test="soureFrom != null  and soureFrom != ''"> and t1.soure_from = #{soureFrom}</if>
+            <if test="commentFlag != null  and commentFlag != ''"> and t1.comment_flag = #{commentFlag}</if>
+            <if test="postMap != null  and postMap != ''"> and t1.post_map = #{postMap}</if>
+            <if test="longitude != null  and longitude != ''"> and t1.longitude = #{longitude}</if>
+            <if test="latitude != null  and latitude != ''"> and t1.latitude = #{latitude}</if>
+            <if test="addType != null  and addType != ''"> and t1.add_type = #{addType}</if>
+            <if test="status != null  and status != ''"> and t1.status = #{status}</if>
+            <if test="dynaConfig != null  and dynaConfig != ''"> and t1.dyna_config = #{dynaConfig}</if>
+            <if test="userId != null"> and t1.user_id = #{userId}</if>
+            <if test="postFlag!=null and postFlag==1">
+                and post_id in (select post_id from sns_post_favorite where user_id = #{favUserId})
+            </if>
+            <if test="postFlag!=null and postFlag==2">
+                and t1.user_id = #{favUserId}
+            </if>
+
+            <choose>
+                <!-- runhe值为1时查询全部 -->
+                <when test="range == 1">
+                </when>
+                <!-- runhe值为2时查询相互关注的用户 -->
+                <when test="range == 2">
+                    and t1.user_id IN (
+                    SELECT  b.user_id AS ta_user_id
+                    FROM sns_user_focus a
+                    INNER JOIN sns_user_focus b ON a.user_id = b.tgt_user_id
+                    WHERE a.tgt_user_id = b.user_id and a.user_id=#{uid})
+                </when>
+                <!-- runhe值为3时查询我关注的用户 -->
+                <when test="range == 3">
+                    and t1.user_id IN (SELECT tgt_user_id FROM sns_user_focus WHERE user_id=#{uid})
+                </when>
+            </choose>
+
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
+        order by t1.create_time DESC
+    </select>
+    <select id="selectAlbumPostList" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostPageReqVO" resultMap="SnsPostResult">
+        select post_id, t1.user_id,t1.sort,t2.nickname as user_name, post_type, t1.title, cover_url, tag, content_type, content, link_url, share_url, media_url, t1.file_url, pic_num,t1.spelevel,
+        t1.create_time, share_num, like_num, comment_num, visit_num, privacy,
+        soure_from, comment_flag, post_map, longitude, latitude,im_user_id,dyna_config from sns_post t1
+        LEFT JOIN system_users t2 on t1.user_id=t2.id
+        <where>
+            <if test="postType != null  and postType != ''"> and t1.post_type = #{postType}</if>
+            <if test="title != null  and title != ''"> and t1.title like concat('%', #{title}, '%')</if>
+        </where>
+        order by t1.sort DESC,t1.create_time DESC
+    </select>
+
+    <update id="updateSnsPost" parameterType="cn.metast.tuoke.module.live.controller.admin.snsPost.vo.SnsPostRespVO">
+        update sns_post
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="postType != null and postType != ''">post_type = #{postType},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="spelevel != null">spelevel = #{spelevel},</if>
+            <if test="coverUrl != null">cover_url = #{coverUrl},</if>
+            <if test="tag != null">tag = #{tag},</if>
+            <if test="contentType != null">content_type = #{contentType},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="linkUrl != null">link_url = #{linkUrl},</if>
+            <if test="shareUrl != null">share_url = #{shareUrl},</if>
+            <if test="mediaUrl != null">media_url = #{mediaUrl},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="picNum != null">pic_num = #{picNum},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="shareNum != null">share_num = #{shareNum},</if>
+            <if test="likeNum != null">like_num = #{likeNum},</if>
+            <if test="commentNum != null">comment_num = #{commentNum},</if>
+            <if test="visitNum != null">visit_num = #{visitNum},</if>
+            <if test="privacy != null">privacy = #{privacy},</if>
+            <if test="soureFrom != null">soure_from = #{soureFrom},</if>
+            <if test="commentFlag != null">comment_flag = #{commentFlag},</if>
+            <if test="postMap != null">post_map = #{postMap},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="addType != null">add_type = #{addType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="bottomType != null">bottom_type = #{bottomType},</if>
+            <if test="boType != null">bo_type = #{boType},</if>
+            <if test="spType != null">sp_type = #{spType},</if>
+            <if test="accessCount != null">access_count = #{accessCount},</if>
+            <if test="coment != null">coment = #{coment},</if>
+        </trim>
+        where post_id = #{postId}
+    </update>
+</mapper>

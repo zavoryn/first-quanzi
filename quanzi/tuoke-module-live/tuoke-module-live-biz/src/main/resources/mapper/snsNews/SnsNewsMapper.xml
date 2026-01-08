@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.metast.tuoke.module.live.dal.mysql.snsNews.SnsNewsMapper">
+
+    <resultMap type="cn.metast.tuoke.module.live.controller.admin.snsNews.vo.SnsNewsRespVO" id="SnsNewsResult">
+        <result property="id"    column="id"    />
+        <result property="newsId"    column="news_id"    />
+        <result property="postId"    column="post_id"    />
+        <result property="typeSeting"    column="type_seting"    />
+        <result property="newsConfig"    column="news_config"    />
+        <result property="isFlag"    column="is_flag"    />
+        <result property="userId"    column="user_id"    />
+        <result property="postType"    column="post_type"    />
+        <result property="title"    column="title"    />
+        <result property="coverUrl"    column="cover_url"    />
+        <result property="tag"    column="tag"    />
+        <result property="contentType"    column="content_type"    />
+        <result property="content"    column="content"    />
+        <result property="linkUrl"    column="link_url"    />
+        <result property="shareUrl"    column="share_url"    />
+        <result property="mediaUrl"    column="media_url"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="picNum"    column="pic_num"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="shareNum"    column="share_num"    />
+        <result property="likeNum"    column="like_num"    />
+        <result property="commentNum"    column="comment_num"    />
+        <result property="visitNum"    column="visit_num"    />
+        <result property="privacy"    column="privacy"    />
+        <result property="soureFrom"    column="soure_from"    />
+        <result property="commentFlag"    column="comment_flag"    />
+        <result property="postMap"    column="post_map"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="addType"    column="add_type"    />
+        <result property="status"    column="status"    />
+        <result property="imUserId"    column="im_user_id"    />
+        <result property="sort"    column="sort"    />
+        <result property="spType"    column="sp_type,"    />
+    </resultMap>
+    <sql id="selectSnsNewsVo">
+        select news_id, post_id,news_config, type_seting,is_flag from sns_news
+    </sql>
+    <select id="selectSnsNewsLists" parameterType="cn.metast.tuoke.module.live.controller.admin.snsNews.vo.SnsNewsPageReqVO" resultMap="SnsNewsResult">
+        select t1.news_id, t1.post_id,t1.type_seting,t1.news_config,t1.is_flag, t2.user_id, t2.post_type, t2.title, t2.cover_url, t2.tag, t2.content_type, t2.content, t2.link_url, t2.share_url, t2.media_url, t2.file_url, t2.pic_num, t2.sp_type,
+        t2.create_time, t2.share_num, t2.sort,t2.like_num, t2.comment_num, t2.visit_num, t2.privacy,
+        t2.soure_from, t2.comment_flag, t2.post_map, t2.longitude, t2.latitude ,t2.add_type,t2.status,t2.im_user_id
+        from sns_news t1 left JOIN sns_post t2
+        on t1.post_id=t2.post_id
+        where t2.status=0
+        <if test="reqVO.postId != null "> and t1.post_id = #{reqVO.postId}</if>
+        <if test="reqVO.typeSeting != null "> and t1.type_seting = #{reqVO.typeSeting}</if>
+        <if test="reqVO.postType != null and reqVO.postType != ''"> and t2.post_type = #{reqVO.postType}</if>
+        <if test="reqVO.title != null and reqVO.title != ''"> and t2.title like concat('%', #{reqVO.title}, '%') </if>
+        <if test="reqVO.spType != null and reqVO.spType != ''"> and t1.post_id = #{reqVO.spType}</if>
+        order by t2.sort DESC,t2.create_time desc
+    </select>
+
+    <select id="selectSnsNewsById" parameterType="Long" resultMap="SnsNewsResult">
+        select t1.news_id, t2.sort,t1.post_id,t1.type_seting,t1.news_config,t1.is_flag, t2.user_id, t2.post_type, t2.title, t2.cover_url, t2.tag, t2.content_type, t2.content, t2.link_url, t2.share_url, t2.media_url, t2.file_url, t2.pic_num,
+               t2.create_time, t2.share_num, t2.like_num, t2.comment_num, t2.visit_num, t2.privacy,
+               t2.soure_from, t2.comment_flag, t2.post_map, t2.longitude, t2.latitude ,t2.add_type,t2.status,t2.im_user_id
+        from sns_news t1 left JOIN sns_post t2
+                                   on t1.post_id=t2.post_id
+        where t2.status=0 and t1.news_id = #{newsId}
+    </select>
+
+    <update id="updateSnsNewsId" parameterType="cn.metast.tuoke.module.live.controller.admin.snsNews.vo.SnsNewsSaveReqVO">
+        update sns_news
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="postId != null">post_id = #{postId},</if>
+            <if test="typeSeting != null">type_seting = #{typeSeting},</if>
+            <if test="newsConfig != null">news_config = #{newsConfig},</if>
+            <if test="isFlag != null">is_flag = #{isFlag},</if>
+        </trim>
+        where news_id = #{newsId}
+    </update>
+    <delete id="deleteSnsNewsByIds" parameterType="Long">
+        delete from sns_news where news_id = #{newsId}
+    </delete>
+</mapper>
