@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.metast.tuoke.module.live.dal.mysql.snsActinfocfg.SnsActInfoCfgMapper">
+
+    <!--
+        一般情况下，尽可能使用 Mapper 进行 CRUD 增删改查即可。
+        无法满足的场景，例如说多表关联查询，才使用 XML 编写 SQL。
+        代码生成器暂时只生成 Mapper XML 文件本身，更多推荐 MybatisX 快速开发插件来生成查询。
+        文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
+     -->
+    <resultMap type="cn.metast.tuoke.module.live.controller.admin.snsActinfocfg.vo.SnsActInfoCfgRespVO" id="SnsActInfoCfgResult">
+        <result property="id"    column="id"    />
+        <result property="actId"    column="act_id"    />
+        <result property="fieldName"    column="field_name"    />
+        <result property="fieldType"    column="field_type"    />
+        <result property="fieldInput"    column="field_input"    />
+        <result property="fieldValue"    column="field_value"    />
+        <result property="fieldKey"    column="field_key"    />
+    </resultMap>
+
+    <sql id="selectSnsActInfoCfgVo">
+        select id, act_id, field_name, field_key,field_type, field_input, field_value from sns_act_info_cfg
+    </sql>
+
+    <select id="selectSnsActInfoCfgList" parameterType="cn.metast.tuoke.module.live.controller.admin.snsActinfocfg.vo.SnsActInfoCfgRespVO" resultMap="SnsActInfoCfgResult">
+        <include refid="selectSnsActInfoCfgVo"/>
+        <where>
+            <if test="actId != null "> and act_id = #{actId}</if>
+            <if test="fieldName != null  and fieldName != ''"> and field_name like concat('%', #{fieldName}, '%')</if>
+            <if test="fieldType != null "> and field_type = #{fieldType}</if>
+            <if test="fieldInput != null  and fieldInput != ''"> and field_input = #{fieldInput}</if>
+            <if test="fieldValue != null  and fieldValue != ''"> and field_value = #{fieldValue}</if>
+        </where>
+    </select>
+    <update id="updateSnsActInfoCfg" parameterType="cn.metast.tuoke.module.live.controller.admin.snsActinfocfg.vo.SnsActInfoCfgRespVO">
+        update sns_act_info_cfg
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="actId != null">act_id = #{actId},</if>
+            <if test="fieldName != null and fieldName != ''">field_name = #{fieldName},</if>
+            <if test="fieldType != null">field_type = #{fieldType},</if>
+            <if test="fieldInput != null and fieldInput != ''">field_input = #{fieldInput},</if>
+            <if test="fieldValue != null">field_value = #{fieldValue},</if>
+            <if test="fieldKey != null">field_key=#{fieldKey},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSnsActInfoCfgById" parameterType="Long">
+        delete from sns_act_info_cfg where act_id = #{id}
+    </delete>
+    <!--批量插入报名信息-->
+    <insert id="insertSnsActUserInfoCfg" parameterType="java.util.List"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sns_act_info_cfg (act_id,field_key,field_name,field_type,field_input,field_value)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.actId}, #{item.fieldKey},#{item.fieldName},#{item.fieldType},#{item.fieldInput},#{item.fieldValue})
+        </foreach>
+    </insert>
+</mapper>
