@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.metast.tuoke.module.live.dal.mysql.snsAct.SnsActMapper">
+
+    <resultMap type="cn.metast.tuoke.module.live.dal.dataobject.snsAct.SnsActDO" id="SnsActResult">
+        <result property="actId"    column="act_id"    />
+        <result property="postId"    column="post_id"    />
+        <result property="actType"    column="act_type"    />
+        <result property="actForm"    column="act_form"    />
+        <result property="fee"    column="fee"    />
+        <result property="longi"    column="longi"    />
+        <result property="lati"    column="lati"    />
+        <result property="location"    column="location"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="regSetting"    column="reg_setting"    />
+        <result property="contactphone"    column="contactphone"    />
+        <result property="signNum"    column="sign_num"    />
+        <result property="mStatus"    column="m_status"    />
+        <result property="feeTime"    column="fee_time"    />
+        <result property="registerTime"    column="register_time"    />
+
+
+        <result property="appyStartDate"    column="appy_start_date"    />
+        <result property="appyEndDate"    column="appy_end_date"    />
+        <result property="qrcode"    column="qrcode"    />
+        <result property="checkFlag"    column="check_flag"    />
+
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createUserName"    column="create_user_name"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="coverUrl"    column="cover_url"    />
+        <result property="tag"    column="tag"    />
+        <result property="isJoin"    column="is_join"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="sort"    column="sort"    />
+
+        <result property="memberLimit"    column="member_limit"    />
+        <result property="joinLimit"    column="join_limit"    />
+        <result property="feeLimit"    column="fee_limit"    />
+        <result property="joinMemberView"    column="join_member_view"    />
+        <result property="btnView"    column="btn_view"    />
+        <result property="shareCfg"    column="share_cfg"    />
+        <result property="audtCfg"    column="audt_cfg"    />
+        <result property="actPut"    column="act_put"    />
+        <result property="fNum"    column="fNum"    />
+        <result property="bNum"    column="bNum"    />
+        <result property="spType"    column="sp_type"    />
+        <result property="isRecom"    column="is_recom"    />
+        <result property="crowdQr"    column="crowd_qr"    />
+    </resultMap>
+    <sql id="selectSnsActVo">
+        SELECT * from (select t1.act_id,t1.appy_start_date,t1.appy_end_date,t1.qrcode,t1.check_flag,t1.m_status, t1.post_id, t1.act_type, t1.act_form, t1.fee, t1.longi, t1.lati,t1.location,
+                              t1.start_date, t1.start_time, t1.end_date, t1.end_time, t1.reg_setting, t1.contactphone, t1.sign_num,
+                              t1.create_user_id,t1.create_user_name,t1.sort,t1.member_limit,t1.join_limit,t1.fee_limit,t1.join_member_view,t1.btn_view,t1.share_cfg,t1.audt_cfg,
+                              t1.act_put,t1.crowd_qr,t1.is_recom, t2.title,t2.content,t2.cover_url,t2.tag,t2.sp_type
+                       from sns_act t1 left join sns_post t2 on t1.post_id = t2.post_id) ts
+    </sql>
+    <select id="selectSnsActList" parameterType="cn.metast.tuoke.module.live.controller.admin.snsAct.vo.SnsActPageReqVO" resultMap="SnsActResult">
+        <include refid="selectSnsActVo"/>
+        <where>
+            <if test="reqvo.actId != null  and reqvo.actId != ''"> and ts.act_id = #{reqvo.actId}</if>
+            <if test="reqvo.postId != null  and reqvo.postId != ''"> and ts.post_id = #{reqvo.postId}</if>
+            <if test="reqvo.actType != null  and reqvo.actType != ''"> and ts.act_type = #{reqvo.actType}</if>
+            <if test="reqvo.actForm != null  and reqvo.actForm != ''"> and ts.act_form = #{reqvo.actForm}</if>
+            <if test="reqvo.fee != null "> and ts.fee = #{reqvo.fee}</if>
+            <if test="reqvo.lati != null "> and ts.lati = #{reqvo.lati}</if>
+            <if test="reqvo.longi != null "> and ts.longi = #{reqvo.longi}</if>
+            <if test="reqvo.location != null  and reqvo.location != ''"> and t1.location = #{reqvo.location}</if>
+            <if test="reqvo.startDate != null "> and ts.start_date = #{reqvo.startDate}</if>
+            <if test="reqvo.startTime != null "> and ts.start_time = #{reqvo.startTime}</if>
+            <if test="reqvo.endDate != null "> and ts.end_date = #{reqvo.endDate}</if>
+            <if test="reqvo.endTime != null "> and ts.end_time = #{reqvo.endTime}</if>
+            <if test="reqvo.mStatus != null"> and ts.m_status = #{reqvo.mStatus}</if>
+            <if test="reqvo.regSetting != null  and reqvo.regSetting != ''"> and ts.reg_setting = #{reqvo.regSetting}</if>
+            <if test="reqvo.contactphone != null  and reqvo.contactphone != ''"> and ts.contactphone = #{reqvo.contactphone}</if>
+            <if test="reqvo.signNum != null "> and ts.sign_num = #{reqvo.signNum}</if>
+            <if test="reqvo.reqType != null and reqvo.reqType == 'owner'"> and ts.create_user_id = #{reqvo.createUserId}</if>
+            <if test="reqvo.postFlag!=null and reqvo.postFlag==1">
+                and ts.post_id in (select post_id from sns_post_favorite where user_id = #{reqvo.loginId})
+            </if>
+            <if test="reqvo.postFlag!=null and reqvo.postFlag==2">
+                and ts.create_user_id = #{reqvo.loginId}
+            </if>
+
+            <if test="reqvo.params.beginTime != null and reqvo.params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(ts.appy_start_date,'%y%m%d') &gt;= date_format(#{reqvo.params.beginTime},'%y%m%d')
+            </if>
+            <if test="reqvo.params.endTime != null and reqvo.params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(ts.appy_start_date,'%y%m%d') &lt;= date_format(#{reqvo.params.endTime},'%y%m%d')
+            </if>
+            <if test="reqvo.spType != null and reqvo.spType != ''">
+                and ts.sp_type = #{reqvo.spType}
+            </if>
+            <if test="reqvo.isRecom != null ">
+                and ts.is_recom = #{reqvo.isRecom}
+            </if>
+            <if test="reqvo.reqType != null and reqvo.reqType == 'join'">
+                and ts.act_id IN (SELECT act_id FROM sns_act_user WHERE user_id=#{reqvo.createUserId})
+            </if>
+        </where>
+        order by ts.sort DESC,ts.act_id DESC
+    </select>
+
+    <select id="selectSnsActById" parameterType="Long" resultMap="SnsActResult">
+        select t1.act_id,t1.appy_start_date,t1.appy_end_date,t1.qrcode,check_flag, t1.post_id, t1.act_type, t1.act_form, t1.fee, t1.longi, t1.lati,location,
+               t1.start_date, t1.start_time, t1.end_date, t1.end_time, t1.reg_setting, t1.contactphone, t1.sign_num,
+               t1.create_user_id,t1.create_user_name,t2.title,t2.content,t2.cover_url,t2.tag,t1.sort, t1.is_recom,
+               t1.member_limit,t1.join_limit,t1.fee_limit,t1.join_member_view,t1.btn_view,t1.share_cfg,t1.audt_cfg,t1.act_put,t1.crowd_qr
+        from sns_act t1 LEFT JOIN sns_post t2
+                                  on t1.post_id=t2.post_id
+        where t1.act_id = #{id} and t2.status=0
+    </select>
+    <delete id="deleteSnsActById" parameterType="Long">
+        delete from sns_act where act_id = #{id}
+    </delete>
+
+    <select id="selectSnsActByActId" parameterType="Long" resultMap="SnsActResult">
+        select t1.act_id,t1.appy_start_date,t1.appy_end_date,t1.qrcode,check_flag, t1.post_id, t1.act_type, t1.act_form, t1.fee, t1.longi, t1.lati,location,
+               t1.start_date, t1.start_time, t1.end_date, t1.end_time, t1.reg_setting, t1.contactphone, t1.sign_num,
+               t1.create_user_id,t1.create_user_name,t2.title,t2.content,t2.cover_url,t2.tag,t1.sort, t1.is_recom,
+               t1.member_limit,t1.join_limit,t1.fee_limit,t1.join_member_view,t1.btn_view,t1.share_cfg,t1.audt_cfg,t1.act_put,t1.crowd_qr
+        from sns_act t1 LEFT JOIN sns_post t2
+                                  on t1.post_id=t2.post_id
+        where t1.act_id = #{id} and t2.status=0
+    </select>
+
+    <update id="updateSnsAct" parameterType="cn.metast.tuoke.module.live.controller.admin.snsAct.vo.SnsActSaveReqVO">
+        update sns_act
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="postId != null and postId != ''">post_id = #{postId},</if>
+            <if test="actType != null and actType != ''">act_type = #{actType},</if>
+            <if test="actForm != null and actForm != ''">act_form = #{actForm},</if>
+            <if test="fee != null">fee = #{fee},</if>
+            <if test="lati != null">lati = #{lati},</if>
+            <if test="longi != null">longi = #{longi},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="regSetting != null">reg_setting = #{regSetting},</if>
+            <if test="contactphone != null">contactphone = #{contactphone},</if>
+            <if test="signNum != null">sign_num = #{signNum},</if>
+            <if test="mStatus != null">m_status = #{mStatus},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="appyStartDate != null">appy_start_date=#{appyStartDate},</if>
+            <if test="appyEndDate != null">appy_end_date=#{appyEndDate},</if>
+
+            <if test="qrcode != null">qrcode=#{qrcode},</if>
+            <if test="checkFlag != null">check_flag=#{checkFlag},</if>
+
+            <if test="memberLimit != null">member_limit=#{memberLimit},</if>
+            <if test="joinLimit != null">join_limit=#{joinLimit},</if>
+            <if test="feeLimit != null">fee_limit=#{feeLimit},</if>
+            <if test="joinMemberView != null">join_member_view=#{joinMemberView},</if>
+            <if test="btnView != null">btn_view=#{btnView},</if>
+            <if test="shareCfg != null">share_cfg=#{shareCfg},</if>
+            <if test="audtCfg != null">audt_cfg=#{audtCfg},</if>
+            <if test="actPut != null">act_put=#{actPut},</if>
+            <if test="isRecom != null">is_recom=#{isRecom},</if>
+            <if test="crowdQr != null">crowd_qr=#{crowdQr},</if>
+        </trim>
+        where act_id = #{actId}
+    </update>
+
+    <insert id="insertSnsAct" parameterType="cn.metast.tuoke.module.live.controller.admin.snsAct.vo.SnsActSaveReqVO" useGeneratedKeys="true" keyProperty="actId">
+        insert into sns_act
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postId != null and postId != ''">post_id,</if>
+            <if test="actType != null and actType != ''">act_type,</if>
+            <if test="actForm != null and actForm != ''">act_form,</if>
+            <if test="fee != null">fee,</if>
+            <if test="lati != null">lati,</if>
+            <if test="longi != null">longi,</if>
+            <if test="location != null">location,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="regSetting != null">reg_setting,</if>
+            <if test="contactphone != null">contactphone,</if>
+            <if test="signNum != null">sign_num,</if>
+            <if test="mStatus != null">m_status,</if>
+            <if test="createUserId != null">create_user_id,</if>
+            <if test="appyStartDate != null">appy_start_date,</if>
+            <if test="appyEndDate != null">appy_end_date,</if>
+            <if test="sort != null">sort,</if>
+            <if test="qrcode != null">qrcode,</if>
+            <if test="checkFlag != null">check_flag,</if>
+
+            <if test="memberLimit != null">member_limit,</if>
+            <if test="joinLimit != null">join_limit,</if>
+            <if test="feeLimit != null">fee_limit,</if>
+            <if test="joinMemberView != null">join_member_view,</if>
+            <if test="btnView != null">btn_view,</if>
+            <if test="shareCfg != null">share_cfg,</if>
+            <if test="audtCfg != null">audt_cfg,</if>
+            <if test="actPut != null">act_put,</if>
+            <if test="isRecom != null">is_recom,</if>
+            <if test="crowdQr != null">crowd_qr,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="postId != null and postId != ''">#{postId},</if>
+            <if test="actType != null and actType != ''">#{actType},</if>
+            <if test="actForm != null and actForm != ''">#{actForm},</if>
+            <if test="fee != null">#{fee},</if>
+            <if test="lati != null">#{lati},</if>
+            <if test="longi != null">#{longi},</if>
+            <if test="location != null">#{location},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="regSetting != null">#{regSetting},</if>
+            <if test="contactphone != null">#{contactphone},</if>
+            <if test="signNum != null">#{signNum},</if>
+            <if test="mStatus != null">#{mStatus},</if>
+            <if test="createUserId != null">#{createUserId},</if>
+            <if test="appyStartDate != null">#{appyStartDate},</if>
+            <if test="appyEndDate != null">#{appyEndDate},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="qrcode != null">#{qrcode},</if>
+            <if test="checkFlag != null">#{checkFlag},</if>
+
+            <if test="memberLimit != null">#{memberLimit},</if>
+            <if test="joinLimit != null">#{joinLimit},</if>
+            <if test="feeLimit != null">#{feeLimit},</if>
+            <if test="joinMemberView != null">#{joinMemberView},</if>
+            <if test="btnView != null">#{btnView},</if>
+            <if test="shareCfg != null">#{shareCfg},</if>
+            <if test="audtCfg != null">#{audtCfg},</if>
+            <if test="actPut != null">#{actPut},</if>
+            <if test="isRecom != null">#{isRecom},</if>
+            <if test="crowdQr != null">#{crowdQr},</if>
+        </trim>
+    </insert>
+</mapper>
