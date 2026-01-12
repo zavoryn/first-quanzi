@@ -1,0 +1,48 @@
+package cn.metast.tuoke.module.product.dal.mysql.category;
+
+import cn.metast.tuoke.framework.mybatis.core.mapper.BaseMapperX;
+import cn.metast.tuoke.framework.mybatis.core.query.LambdaQueryWrapperX;
+import cn.metast.tuoke.framework.mybatis.core.query.MPJLambdaWrapperX;
+import cn.metast.tuoke.module.product.controller.admin.category.vo.ProductCategoryListReqVO;
+import cn.metast.tuoke.module.product.dal.dataobject.category.ProductCategoryDO;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * 商品分类 Mapper
+ *
+ * @author metast.cn
+ */
+@Mapper
+public interface ProductCategoryMapper extends BaseMapperX<ProductCategoryDO> {
+
+    default List<ProductCategoryDO> selectList(ProductCategoryListReqVO listReqVO) {
+        return selectList(new LambdaQueryWrapperX<ProductCategoryDO>()
+                .likeIfPresent(ProductCategoryDO::getName, listReqVO.getName())
+                .eqIfPresent(ProductCategoryDO::getParentId, listReqVO.getParentId())
+                .inIfPresent(ProductCategoryDO::getId, listReqVO.getParentIds())
+                .eqIfPresent(ProductCategoryDO::getStatus, listReqVO.getStatus())
+                .orderByAsc(ProductCategoryDO::getSort));
+    }
+
+    default Long selectCountByParentId(Long parentId) {
+        return selectCount(ProductCategoryDO::getParentId, parentId);
+    }
+
+    default List<ProductCategoryDO> selectListByStatus(Integer status) {
+        return selectList(ProductCategoryDO::getStatus, status);
+    }
+    default ProductCategoryDO selectByAndName(String name) {
+        return selectOne(new MPJLambdaWrapperX<ProductCategoryDO>()
+                .eq(ProductCategoryDO::getName, name)
+                .last("LIMIT 1"));
+    }
+    default List<ProductCategoryDO> selectListByIdAndStatus(Collection<Long> ids, Integer status) {
+        return selectList(new LambdaQueryWrapperX<ProductCategoryDO>()
+                .in(ProductCategoryDO::getId, ids)
+                .eq(ProductCategoryDO::getStatus, status));
+    }
+
+}
