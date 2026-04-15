@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>tuoke-module-website</artifactId>
+        <groupId>cn.metast</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>tuoke-module-website-biz</artifactId>
+
+    <name>${project.artifactId}</name> 
+    <description> 
+        品牌建设子 模块，主要实现 XXX、YYY、ZZZ 等功能。
+    </description>
+
+    <dependencies>  
+        <dependency>
+            <groupId>cn.metast</groupId>
+            <artifactId>tuoke-module-website-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>cn.metast</groupId>
+            <artifactId>tuoke-spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.metast</groupId>
+            <artifactId>tuoke-spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>cn.metast</groupId>
+            <artifactId>tuoke-spring-boot-starter-mybatis</artifactId>
+        </dependency>
+
+        <!-- Test 测试相关 -->
+        <dependency>
+            <groupId>cn.metast</groupId>
+            <artifactId>tuoke-spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
